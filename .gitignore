@@ -1,0 +1,9 @@
+# Delete
+Reports/*
+Reports_land/*
+Reports_stg/*
+
+# Keep
+!Reports/.gitkeep
+!Reports_land/.gitkeep
+!Reports_stg/.gitkeep
