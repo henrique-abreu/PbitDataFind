@@ -1,9 +1,11 @@
 # Delete
 Reports/*
-Reports_land/*
-Reports_stg/*
+Extract/*
+JsonConverted/*
+Output/*
 
 # Keep
 !Reports/.gitkeep
-!Reports_land/.gitkeep
-!Reports_stg/.gitkeep
+!Extract/.gitkeep
+!JsonConverted/.gitkeep
+!Output/.gitkeep
