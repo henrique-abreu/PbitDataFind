@@ -31,3 +31,12 @@ def saveResults(fileFullpath, results):
             file.write("%s\n" % item)
     
     return
+
+
+def elementToFind():
+
+    with open('elements.txt', 'r') as file:
+        data = file.read()
+        elements = data.split(',')
+
+    return elements
