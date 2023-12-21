@@ -1,8 +1,0 @@
-["Element: ['PDS_SFDCProduct', 'vwPDS_SFDCProduct']", 'Report: Alliance and Technology Partners.json']
-["Element: ['PDS_SAPP84System', 'PDS_SFDCProduct', 'vwPDS_SAPP84System', 'vwPDS_SFDCProduct']", 'Report: CE Server Bundesliga.json']
-["Element: ['PDS_SAPP84System', 'PDS_SFDCProduct', 'vwPDS_SAPP84System', 'vwPDS_SFDCProduct']", 'Report: Datacenter Analyzer.json']
-["Element: ['PDS_MaterialByQuote', 'vwPDS_MaterialByQuote']", 'Report: Material By Quote.json']
-["Element: ['ZCTO_TECHHIST', 'vwFixSupplyReschedules', 'vwFixSupplyReschedules_ZCTO_TECHHIST']", 'Report: Products Supplier Performance Reschedules.json']
-["Element: ['vwFixSupplyPurchaseOrders']", 'Report: Products Supplier Performance.json']
-["Element: ['LFA1']", 'Report: S2P Suppliers with spend above 5K and short due diligence.json']
-["Element: ['vwSalesforceVolumes']", 'Report: Salesforce Volumes.json']
