@@ -1,5 +1,5 @@
 # Package Imports
-import subprocess
+import subprocess, sys
 import os
 from os import listdir
 from os.path import isfile, join
@@ -47,17 +47,15 @@ def JsonConverted(targetDirectory):
 
     extractDirectory = targetDirectory + "Extract/"
     jsonDirectory = targetDirectory + "JsonConverted/"
+    powershell_script = './Scripts/JsonConvert.ps1'
+
     files = InOut.allFiles(extractDirectory)
 
     for file in files:
-        # Need to create a PowerShell script
-        powershell_script = f'''
-            Get-Content "{extractDirectory + file}" -Raw -Encoding unicode |
-            Out-File -FilePath "{jsonDirectory + file}.json" -Encoding utf8
-        '''
-
-    # Powershell
-    subprocess.run(["powershell", "-Command", powershell_script])
+        # PowerShell
+        subprocess.run(["powershell.exe", "-File", powershell_script, 
+                        extractDirectory + file, jsonDirectory + file + ".json"], 
+                        stdout=sys.stdout)
 
     return
 
