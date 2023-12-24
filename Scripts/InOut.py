@@ -1,10 +1,26 @@
 # Package Imports
-import subprocess
 import os
 from os import listdir
 from os.path import isfile, join
-from zipfile import ZipFile
-import json
+
+
+def existsFolder(targetDirectory, subfolder):
+
+    desiredFolder = targetDirectory + subfolder
+    exists = os.path.exists(desiredFolder)
+    
+    if exists is False:
+        os.mkdir(desiredFolder)
+
+    else:
+        files = os.listdir(desiredFolder)
+
+        if len(files) > 0:
+            for file in files:
+                file_path = os.path.join(desiredFolder, file)
+                os.remove(file_path)
+
+    return
 
 
 def allFiles(targetDirectory):
