@@ -16,8 +16,6 @@ def extracts(targetDirectory):
     extractDirectory = targetDirectory + "Extract/"
     failed_reports = []
 
-    print(reportsDirectory)
-
     files = InOut.allFiles(reportsDirectory)
 
     for file in files:
@@ -78,7 +76,7 @@ def finder(targetDirectory, elementToFind):
     
         for dataset in data.get("model").get("tables"):
         
-            filtered_data = dataset.get("partitInOutns")[0].get("source").get("expressInOutn")[1]
+            filtered_data = dataset.get("partitions")[0].get("source").get("expression")[1]
             res = [ele for ele in elementToFind if(ele in filtered_data)]
             
             if res:
@@ -109,11 +107,11 @@ if __name__ == "__main__":
         InOut.existsFolder(targetDirectory, folder)
 
     # Step 2: Unzip Report
-    #extracts(targetDirectory)
+    extracts(targetDirectory)
 
     # Step 3: Convert to Json
-    #JsonConverted(targetDirectory)
+    JsonConverted(targetDirectory)
 
     # Step 4: Report find Dataset
-    #elements = ["Sprint", "Issues", "Dog"]
-    #finder(targetDirectory, elements)
+    elements = ["Sprint", "Issues", "Dog"]
+    finder(targetDirectory, elements)
