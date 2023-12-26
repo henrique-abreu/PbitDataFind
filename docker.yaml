@@ -1,11 +1,11 @@
 version: '3.8'
 services:
   python:
-    image: python:alpine3.19
+    image: python:latest
     stdin_open: true
     tty: true
-    
+
   powershell:
-    image: mcr.microsoft.com/powershell:lts-alpine-3.17
+    image: mcr.microsoft.com/powershell:latest
     stdin_open: true
     tty: true
