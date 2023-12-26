@@ -1,0 +1,4 @@
+docker-compose -f docker.yaml up -d
+docker container ls
+docker cp Scripts/main.py contanerid:/Scripts/main.py
+docker exec -it containerid sh

@@ -99,7 +99,7 @@ if __name__ == "__main__":
     targetDirectory = os.getcwd() + "/"
 
     # Step 1: Verify Folders
-    folders = ['Extract', 'JsonConverted', 'Output']
+    folders = ['Extract', 'JsonConverted', 'Output', 'Reports']
 
     for folder in folders:
         InOut.existsFolder(targetDirectory, folder)
@@ -109,7 +109,8 @@ if __name__ == "__main__":
 
     # Step 3: Convert to Json
     JsonConverted(targetDirectory)
-
+    '''
     # Step 4: Report find Dataset
     elements = ["Sprint", "Issues", "Dog"]
     finder(targetDirectory, elements)
+    '''
