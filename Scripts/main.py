@@ -12,8 +12,8 @@ import InOut
 
 def extracts(targetDirectory):
 
-    reportsDirectory = targetDirectory + "Reports/"
-    extractDirectory = targetDirectory + "Extract/"
+    reportsDirectory = os.path.join(targetDirectory, "Reports")
+    extractDirectory = os.path.join(targetDirectory, "Extract")
     failed_reports = []
 
     files = InOut.allFiles(reportsDirectory)
@@ -22,17 +22,17 @@ def extracts(targetDirectory):
         filename = file.split('.')[0]
 
         try:
-            with ZipFile(reportsDirectory + file, 'r') as zObject:  
+            with ZipFile(os.path.join(reportsDirectory, file), 'r') as zObject:  
                 zObject.extract("DataModelSchema", path=f"{extractDirectory}") 
             zObject.close()
 
-            os.rename(extractDirectory + "DataModelSchema", extractDirectory + f"{filename}")
+            os.rename(os.path.join(extractDirectory, "DataModelSchema"), os.path.join(extractDirectory, f"{filename}"))
 
         except KeyError:
             failed_reports.append(file)
     
     if len(failed_reports) > 0:
-        fileFullPath = targetDirectory + "Output/" + "results_bad.txt"
+        fileFullPath = os.path.join(targetDirectory, "Output", "results_bad.txt")
 
         # Clear Text File
         InOut.clearTextFile(fileFullPath)
@@ -45,8 +45,8 @@ def extracts(targetDirectory):
 
 def JsonConverted(targetDirectory):
 
-    extractDirectory = targetDirectory + "Extract/"
-    jsonDirectory = targetDirectory + "JsonConverted/"
+    extractDirectory = os.path.join(targetDirectory, "Extract")
+    jsonDirectory = os.path.join(targetDirectory, "JsonConverted/")
     powershell_script = './Scripts/JsonConvert.ps1'
 
     files = InOut.allFiles(extractDirectory)
@@ -65,7 +65,7 @@ def finder(targetDirectory, elementToFind):
     # Read Json
     results = []
 
-    jsonDirectory = targetDirectory + "JsonConverted/"
+    jsonDirectory = os.path.join(targetDirectory, "JsonConverted")
     files = InOut.allFiles(jsonDirectory)
 
     for file in files:
@@ -82,7 +82,7 @@ def finder(targetDirectory, elementToFind):
                 break
     
     if len(results) > 0:
-        fileFullPath = targetDirectory + "Output/" + "results.txt"
+        fileFullPath = os.path.join(targetDirectory, "Output", "results.txt")
 
         # Clear Text File
         InOut.clearTextFile(fileFullPath)
@@ -96,20 +96,23 @@ def finder(targetDirectory, elementToFind):
 if __name__ == "__main__":
 
     # Working Directory
-    targetDirectory = os.getcwd() + "/"
+    targetDirectory = os.getcwd()
 
     # Step 1: Verify Folders
-    folders = ['Extract', 'JsonConverted', 'Output']
+    InOut.existsFolder(targetDirectory, "data")
 
+    folders = ['Extract', 'JsonConverted', 'Output']
     for folder in folders:
+        targetDirectory = os.path.join(targetDirectory, "data")
         InOut.existsFolder(targetDirectory, folder)
 
     # Step 2: Unzip Report
     extracts(targetDirectory)
-    '''
+    
     # Step 3: Convert to Json
     JsonConverted(targetDirectory)
+    
     # Step 4: Report find Dataset
     elements = ["Sprint", "Issues", "Dog"]
     finder(targetDirectory, elements)
-    '''
+    

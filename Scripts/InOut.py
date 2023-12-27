@@ -6,7 +6,7 @@ from os.path import isfile, join
 
 def existsFolder(targetDirectory, subfolder):
 
-    desiredFolder = targetDirectory + subfolder
+    desiredFolder = os.path.join(targetDirectory, subfolder)
     exists = os.path.exists(desiredFolder)
     
     if exists is False:

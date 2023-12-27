@@ -1,8 +1,5 @@
 # Delete
-Reports/*
+data/Reports/*.pbit
 Extract/
 JsonConverted/
 Output/
-
-# Keep
-!Reports/.gitkeep
