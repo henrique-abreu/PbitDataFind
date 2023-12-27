@@ -1,11 +1,33 @@
 version: '3.8'
+#services:
+#  python:
+#    image: python:latest
+#    stdin_open: true
+#    tty: true
+
+#  powershell:
+#    image: mcr.microsoft.com/powershell:latest
+#    stdin_open: true
+#    tty: true
+
 services:
   python:
     image: python:latest
-    stdin_open: true
-    tty: true
+    volumes:
+      - .:/DatasetFinder
+    depends_on:
+      - powershell
+    command: ["python", "/DatasetFinder/Scripts/main.py"]
+    networks:
+      - DatasetFinder_network
 
   powershell:
     image: mcr.microsoft.com/powershell:latest
-    stdin_open: true
-    tty: true
+    volumes:
+      - .:/DatasetFinder
+    networks:
+      - DatasetFinder_network
+
+networks:
+  DatasetFinder_network:
+    driver: bridge

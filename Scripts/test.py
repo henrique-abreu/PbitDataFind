@@ -1,5 +1,8 @@
 import os
 
-path = "test"
+targetDirectory = os.getcwd() + "/"
 
-print(os.path.join(path, "User/Desktop", "file.txt"))
+if "jira" not in targetDirectory:
+    targetDirectory = "/jira/"
+
+print(targetDirectory)

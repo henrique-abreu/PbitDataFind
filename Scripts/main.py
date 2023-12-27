@@ -98,6 +98,10 @@ if __name__ == "__main__":
     # Working Directory
     targetDirectory = os.getcwd() + "/"
 
+    if "DatasetFinder" not in targetDirectory:
+        #Because of docker
+        targetDirectory = "/DatasetFinder/"
+
     # Step 1: Verify Folders
     folders = ['Extract', 'JsonConverted', 'Output']
 
