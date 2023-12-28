@@ -5,6 +5,7 @@ from os import listdir
 from os.path import isfile, join
 from zipfile import ZipFile
 import json
+import requests
 
 # Files Imports
 import InOut
@@ -48,14 +49,18 @@ def JsonConverted(targetDirectory):
     extractDirectory = targetDirectory + "Extract/"
     jsonDirectory = targetDirectory + "JsonConverted/"
     powershell_script = './Scripts/JsonConvert.ps1'
+    url = 'http://powershell_app:8000'  # Target the PowerShell container service
 
     files = InOut.allFiles(extractDirectory)
 
     for file in files:
         # PowerShell
+        response = requests.post(url, data=file, verify=False)
+        '''
         subprocess.run(["powershell.exe", "-File", powershell_script, 
                         extractDirectory + file, jsonDirectory + file + ".json"], 
                         stdout=sys.stdout)
+        '''
 
     return
 

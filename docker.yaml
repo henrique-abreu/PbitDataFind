@@ -1,33 +1,28 @@
-version: '3.8'
-#services:
-#  python:
-#    image: python:latest
-#    stdin_open: true
-#    tty: true
-
-#  powershell:
-#    image: mcr.microsoft.com/powershell:latest
-#    stdin_open: true
-#    tty: true
-
+version: '3'
 services:
-  python:
-    image: python:latest
+  python_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=/DatasetFinder
     volumes:
       - .:/DatasetFinder
     depends_on:
-      - powershell
-    command: ["python", "/DatasetFinder/Scripts/main.py"]
+      - powershell_app
     networks:
-      - DatasetFinder_network
+      - my_network
 
-  powershell:
+  powershell_app:
     image: mcr.microsoft.com/powershell:latest
+    ports:
+      - "8000:8000"
+    command: ["pwsh", "-Command", "& '/DatasetFinder/Scripts/JsonConvert.ps1'"]
     volumes:
-      - .:/DatasetFinder
+      - .:/DatasetFinder  # Mounting PowerShell script directory
     networks:
-      - DatasetFinder_network
+      - my_network
 
 networks:
-  DatasetFinder_network:
+  my_network:
     driver: bridge

@@ -1,5 +1,7 @@
 # Yaml up
-docker-compose -f docker.yaml up -d
+    docker-compose -f docker.yaml up -d
+        OR
+    docker compose -f docker.yaml up --build -d
 docker container ls
 docker exec -it c37da0d79694 bash
 mkdir DatasetFinder
