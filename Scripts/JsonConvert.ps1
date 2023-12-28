@@ -20,8 +20,6 @@ while ($true) {
     $reader.Close()
     $body.Close()
 
-    Write-Host "Received POST request with data: $data"
-
     try {
         # Attempt to parse the received data as JSON
         $fileData = ConvertFrom-Json $data -ErrorAction Stop
@@ -39,7 +37,6 @@ while ($true) {
             
             # Sending a response back to acknowledge the successful execution
             $response = $context.Response
-            $responseContent = "Received valid source and destination paths: Source=$source, Destination=$destination"
             $buffer = [System.Text.Encoding]::UTF8.GetBytes($responseContent)
             $response.ContentLength64 = $buffer.Length
             $response.OutputStream.Write($buffer, 0, $buffer.Length)
