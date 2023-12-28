@@ -54,8 +54,13 @@ def JsonConverted(targetDirectory):
     files = InOut.allFiles(extractDirectory)
 
     for file in files:
+
+        data = [extractDirectory + file, jsonDirectory + file + ".json"]
+        
+        json_data = json.dumps(data)
+
         # PowerShell
-        response = requests.post(url, data=file, verify=False)
+        response = requests.post(url, data=json_data, verify=False)
         '''
         subprocess.run(["powershell.exe", "-File", powershell_script, 
                         extractDirectory + file, jsonDirectory + file + ".json"], 
