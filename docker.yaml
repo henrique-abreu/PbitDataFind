@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   python_app:
     build:
@@ -7,22 +7,4 @@ services:
     environment:
       - PYTHONPATH=/DatasetFinder
     volumes:
-      - .:/DatasetFinder
-    depends_on:
-      - powershell_app
-    networks:
-      - my_network
-
-  powershell_app:
-    image: mcr.microsoft.com/powershell:latest
-    ports:
-      - "8000:8000"
-    command: ["pwsh", "-Command", "& '/DatasetFinder/Scripts/JsonConvert.ps1'"]
-    volumes:
-      - .:/DatasetFinder  # Mounting PowerShell script directory
-    networks:
-      - my_network
-
-networks:
-  my_network:
-    driver: bridge
+      - ./app:/app

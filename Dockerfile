@@ -2,13 +2,10 @@
 FROM python:latest
 
 # Set the working directory in the container
-WORKDIR /DatasetFinder
+WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY . /DatasetFinder
-
-# Install dependencies
-RUN pip install requests
+COPY ./app /app
 
 # Command to run the Python script
 CMD ["python", "Scripts/main.py"]
