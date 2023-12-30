@@ -1,0 +1,18 @@
+# Yaml up
+    docker-compose -f docker.yaml up -d
+        OR
+    docker compose -f docker.yaml up --build -d
+docker container ls
+docker exec -it c37da0d79694 bash
+mkdir DatasetFinder
+cd DatasetFinder
+mkdir Reports
+Ctrl+D
+docker cp Scripts/main.py c37da0d79694:DatasetFinder/Scripts/main.py
+docker cp Scripts/InOut.py c37da0d79694:DatasetFinder/Scripts/InOut.py
+docker cp Scripts/JsonConvert.ps1 c37da0d79694:DatasetFinder/Scripts/JsonConvert.ps1
+docker cp Reports/Jira.pbit c37da0d79694:DatasetFinder/Reports/Jira.pbit
+docker exec -it c37da0d79694 sh
+
+# Yaml down
+docker-compose -f docker.yaml down

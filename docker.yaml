@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  python_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=/DatasetFinder
+    volumes:
+      - ./app:/app

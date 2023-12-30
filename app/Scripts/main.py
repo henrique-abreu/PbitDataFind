@@ -1,8 +1,6 @@
 # Package Imports
-import subprocess, sys
+# import subprocess, sys
 import os
-from os import listdir
-from os.path import isfile, join
 from zipfile import ZipFile
 import json
 
@@ -47,15 +45,16 @@ def JsonConverted(targetDirectory):
 
     extractDirectory = targetDirectory + "Extract/"
     jsonDirectory = targetDirectory + "JsonConverted/"
-    powershell_script = './Scripts/JsonConvert.ps1'
 
     files = InOut.allFiles(extractDirectory)
 
     for file in files:
-        # PowerShell
-        subprocess.run(["powershell.exe", "-File", powershell_script, 
-                        extractDirectory + file, jsonDirectory + file + ".json"], 
-                        stdout=sys.stdout)
+
+        with open(extractDirectory + file, 'rb') as extractFile:
+            content = extractFile.read()
+
+        with open(jsonDirectory + file + ".json", 'wb') as convertFile:
+            convertFile.write(content)
 
     return
 
@@ -96,20 +95,25 @@ def finder(targetDirectory, elementToFind):
 if __name__ == "__main__":
 
     # Working Directory
-    targetDirectory = os.getcwd() + "/"
+    targetDirectory = os.getcwd() + "/app/"
+
+    if "DatasetFinder" not in targetDirectory:
+        #Because of no docker
+        targetDirectory = "/app/"
 
     # Step 1: Verify Folders
     folders = ['Extract', 'JsonConverted', 'Output']
 
     for folder in folders:
-        InOut.existsFolder(targetDirectory, folder)
+        InOut.existsFolder(targetDirectory + "data/", folder)
 
     # Step 2: Unzip Report
-    extracts(targetDirectory)
-
+    extracts(targetDirectory + "data/")
+    
     # Step 3: Convert to Json
-    JsonConverted(targetDirectory)
-
+    JsonConverted(targetDirectory + "data/")
+    
     # Step 4: Report find Dataset
     elements = ["Sprint", "Issues", "Dog"]
-    finder(targetDirectory, elements)
+    finder(targetDirectory + "data/", elements)
+    
