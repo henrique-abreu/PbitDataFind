@@ -54,7 +54,7 @@ docker-compose -f ./docker.yaml up -d
 To check on the results, access the url: [MongoDB](http://localhost:8080).  
 When prompted for credentials, use the following: 
  - User: admin
- - Pass: admin
+ - Pass: pass
 
 This can be changed in the yaml file of the project.
 
