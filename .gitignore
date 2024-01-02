@@ -1,5 +1,6 @@
 # Delete
-data/Reports/*.pbit
+app/data/
 Extract/
 JsonConverted/
 Output/
+app/Scripts/__pycache__

@@ -52,15 +52,12 @@ def saveResults(fileFullpath, results):
 
 def saveResultsMongo(collection, data):
 
-    client = MongoClient("mongodb://localhost:27017/", username='admin', password='admin')
+    client = MongoClient("mongodb://mongodb:27017/", username='admin', password='admin')
     
-    db = client["Output"] 
+    db = client["Results"] 
     coll = db[f"{collection}"] 
 
-    for key, value in data:
-        data_sep = {}
-        data_sep[key] = value
-        coll.insert_one(data_sep)
+    coll.insert_one(data)
     
     client.close()
     

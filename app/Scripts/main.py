@@ -2,6 +2,7 @@
 import os
 from zipfile import ZipFile
 import json
+from pymongo.mongo_client import MongoClient
 
 # Files Imports
 import InOut
@@ -105,12 +106,12 @@ if __name__ == "__main__":
     JsonConverted(targetDirectory + "data/")
     
     # Step 4: Report find Dataset
-    elements = ["Sprint", "Issues", "Dog"]
+    elements = ["P84", "Channel"]
     data = finder(targetDirectory + "data/", elements)
 
     # Step 5: Save Results
     if len(data.items()) > 0:
-        fileFullPath = targetDirectory + "Output/" + "results.txt"
+        # fileFullPath = targetDirectory + "Output/" + "results.txt"
 
         # Clear Text File
         # InOut.clearTextFile(targetDirectory + "Output/results.txt")
