@@ -1,5 +1,4 @@
 # Package Imports
-# import subprocess, sys
 import os
 from zipfile import ZipFile
 import json
@@ -12,7 +11,7 @@ def extracts(targetDirectory):
 
     reportsDirectory = targetDirectory + "Reports/"
     extractDirectory = targetDirectory + "Extract/"
-    failed_reports = []
+    failed_reports = {}
 
     files = InOut.allFiles(reportsDirectory)
 
@@ -27,18 +26,9 @@ def extracts(targetDirectory):
             os.rename(extractDirectory + "DataModelSchema", extractDirectory + f"{filename}")
 
         except KeyError:
-            failed_reports.append(file)
-    
-    if len(failed_reports) > 0:
-        fileFullPath = targetDirectory + "Output/" + "results_bad.txt"
+            failed_reports[file] = "Failed"
 
-        # Clear Text File
-        InOut.clearTextFile(fileFullPath)
-
-        # Save to Text File
-        InOut.saveResults(fileFullPath, failed_reports)
-
-    return
+    return failed_reports
 
 
 def JsonConverted(targetDirectory):
@@ -62,7 +52,7 @@ def JsonConverted(targetDirectory):
 def finder(targetDirectory, elementToFind):
 
     # Read Json
-    results = []
+    results = {}
 
     jsonDirectory = targetDirectory + "JsonConverted/"
     files = InOut.allFiles(jsonDirectory)
@@ -77,19 +67,10 @@ def finder(targetDirectory, elementToFind):
             res = [ele for ele in elementToFind if(ele in filtered_data)]
             
             if res:
-                results.append([f"Element: {res}", f"Report: {file}"])
+                results[f"{file}"] = res
                 break
-    
-    if len(results) > 0:
-        fileFullPath = targetDirectory + "Output/" + "results.txt"
 
-        # Clear Text File
-        InOut.clearTextFile(fileFullPath)
-
-        # Save to Text File
-        InOut.saveResults(fileFullPath, results)
-
-    return
+    return results
 
 
 if __name__ == "__main__":
@@ -108,12 +89,32 @@ if __name__ == "__main__":
         InOut.existsFolder(targetDirectory + "data/", folder)
 
     # Step 2: Unzip Report
-    extracts(targetDirectory + "data/")
+    data = extracts(targetDirectory + "data/")
+
+    if len(data.items()) > 0:
+        fileFullPath = targetDirectory + "Output/" + "results_bad.txt"
+
+        # Clear Text File
+        # InOut.clearTextFile(targetDirectory + "Output/results_bad.txt")
+
+        # Save
+        #InOut.saveResults(fileFullPath, data)
+        InOut.saveResultsMongo("Output_Bad", data)
     
     # Step 3: Convert to Json
     JsonConverted(targetDirectory + "data/")
     
     # Step 4: Report find Dataset
     elements = ["Sprint", "Issues", "Dog"]
-    finder(targetDirectory + "data/", elements)
-    
+    data = finder(targetDirectory + "data/", elements)
+
+    # Step 5: Save Results
+    if len(data.items()) > 0:
+        fileFullPath = targetDirectory + "Output/" + "results.txt"
+
+        # Clear Text File
+        # InOut.clearTextFile(targetDirectory + "Output/results.txt")
+
+        # Save
+        # InOut.saveResults(fileFullPath, data)
+        InOut.saveResultsMongo("Output_Good", data)

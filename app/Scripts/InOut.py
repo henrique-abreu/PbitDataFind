@@ -2,6 +2,7 @@
 import os
 from os import listdir
 from os.path import isfile, join
+from pymongo.mongo_client import MongoClient
 
 
 def existsFolder(targetDirectory, subfolder):
@@ -45,6 +46,23 @@ def saveResults(fileFullpath, results):
         for item in results:
             # write each item on a new line
             file.write("%s\n" % item)
+    
+    return
+
+
+def saveResultsMongo(collection, data):
+
+    client = MongoClient("mongodb://localhost:27017/", username='admin', password='admin')
+    
+    db = client["Output"] 
+    coll = db[f"{collection}"] 
+
+    for key, value in data:
+        data_sep = {}
+        data_sep[key] = value
+        coll.insert_one(data_sep)
+    
+    client.close()
     
     return
 

@@ -1,17 +1,5 @@
-version: '3.8'
+version: "3.8"
 services:
-
-  python_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - PYTHONPATH=/DatasetFinder
-    depends_on:
-      - mongo-express
-    volumes:
-      - ./app:/app
-
   mongodb:
     image: mongo:latest
     restart: always
