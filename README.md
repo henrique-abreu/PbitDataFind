@@ -17,43 +17,47 @@ The python main.py file, follows the following logic:
 - It then converts that same file into a valid json and stores it in the "JsonConverted" Folder 
 - After that, it tries to insert into a collection on MongoDB, in case the connection is live, otherwise it will store the results in the "Output" folder.
 
-The last step was to be able to run the python code without the need of MongoDB since it's not really a requirement. Nonetheless, the pymongo would still need to be ran from the command line, in order to install it and make it work.
+The last step was to be able to run the python code without the need of MongoDB since it's not really a requirement. Nonetheless, the pymongo would still need to be ran from the command line, in order to make it work.
+
+---
+
+### Requirements:
+1. Copy the .pbit files to the Reports folders.
+
+2. Change the elements.txt file with the words you want to be found. The text file is displayed inside the following folder structure:
+```
+.
+│    
+└───app
+    └───Scripts
+        │   elements.txt
+```
+
+#### Without Docker
 
 From the root directory of the project:
 
 ```
 pip install -r ./app/Scripts/requirements.txt 
 ```
+And then
+ ```
+ python ./app/Scripts/main.py
+```
 
-**Files Structure:**
+#### With Docker Installed
+
+After performing the two steps listed in the Requirements section, just run the following command to build the image and run the containers.
 ```
-C:.
-│   .gitignore
-│   DatasetFinder.code-workspace
-│   docker.yaml
-│   Dockerfile
-│   instructions.txt
-│   README.md
-│
-└───app
-    │   requirements.txt
-    │
-    ├───data
-    │   ├───Extract
-    │   │
-    │   ├───JsonConverted
-    │   │
-    │   ├───Output
-    │   └───Reports
-    │           .gitkeep
-    │
-    └───Scripts
-        │   elements.txt
-        │   InOut.py
-        │   main.py
-        │
-        └───__pycache__
-                InOut.cpython-311.pyc
-                InOut.cpython-312.pyc
+docker-compose -f ./docker.yaml up -d 
 ```
-                
+To check on the results, access the url: [MongoDB](http://localhost:8080).  
+When prompted for credentials, use the following: 
+ - User: admin
+ - Pass: admin
+
+This can be changed in the yaml file of the project.
+
+---
+
+### Conclusion
