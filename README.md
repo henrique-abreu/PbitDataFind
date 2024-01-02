@@ -61,3 +61,5 @@ This can be changed in the yaml file of the project.
 ---
 
 ### Conclusion
+This project allowed to automate the tedious task of checking the data source of the PowerBI reports by making the process of extraction of the metadata, conversion into JSON file, checking the data source and saving the results more efficient and effective.
+
