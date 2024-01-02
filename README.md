@@ -21,9 +21,12 @@ The last step was to be able to run the python code without the need of MongoDB 
 
 From the root directory of the project:
 
-pip install -r requirements.txt 
+```
+pip install -r ./app/Scripts/requirements.txt 
+```
 
-
+**Files Structure:**
+```
 C:.
 │   .gitignore
 │   DatasetFinder.code-workspace
@@ -52,4 +55,5 @@ C:.
         └───__pycache__
                 InOut.cpython-311.pyc
                 InOut.cpython-312.pyc
+```
                 
