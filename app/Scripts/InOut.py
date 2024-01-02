@@ -3,6 +3,19 @@ import os
 from os import listdir
 from os.path import isfile, join
 from pymongo.mongo_client import MongoClient
+from pymongo.errors import ConnectionFailure
+
+
+def check_mongodb_connection():
+    try:
+        client = MongoClient('mongodb://mongodb:27017/', username='admin', password='admin')
+
+        # Use a command to check the server status
+        server_info = client.admin.command('serverStatus')
+
+        return client
+    except ConnectionFailure:
+        return None
 
 
 def existsFolder(targetDirectory, subfolder):
@@ -37,37 +50,46 @@ def allFiles(targetDirectory):
 
 
 def clearTextFile(fileFullPath):
-    return open(f'{fileFullPath}', 'w').close()
+    if os.path.exists(fileFullPath):
+        # File exists, clear its contents by opening in write mode and closing
+        open(f'{fileFullPath}', 'w').close()
+    else:
+        # File doesn't exist, create an empty file
+        with open(fileFullPath, 'w') as file:
+            pass 
+    return
 
 
 def saveResults(fileFullpath, results):
 
     with open(f'{fileFullpath}', 'w') as file:
-        for item in results:
-            # write each item on a new line
-            file.write("%s\n" % item)
+        file.write(str(results))
     
     return
 
 
-def saveResultsMongo(collection, data):
-
-    client = MongoClient("mongodb://mongodb:27017/", username='admin', password='admin')
+def saveResultsMongo(client, collection, data):
     
+    # Create Database and Collection
     db = client["Results"] 
     coll = db[f"{collection}"] 
 
+    # Insert Document
     coll.insert_one(data)
     
+    # Close Connection
     client.close()
     
     return
 
 
-def elementToFind():
+def elementToFind(filefullpath):
 
-    with open('elements.txt', 'r') as file:
+    with open(filefullpath, 'r') as file:
         data = file.read()
-        elements = data.split(',')
+        elements_list = data.split(',')
+        elements = [string.strip() for string in elements_list]
+
+    elements_list.clear()
 
     return elements

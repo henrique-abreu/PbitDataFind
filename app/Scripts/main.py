@@ -2,7 +2,6 @@
 import os
 from zipfile import ZipFile
 import json
-from pymongo.mongo_client import MongoClient
 
 # Files Imports
 import InOut
@@ -93,29 +92,43 @@ if __name__ == "__main__":
     data = extracts(targetDirectory + "data/")
 
     if len(data.items()) > 0:
-        fileFullPath = targetDirectory + "Output/" + "results_bad.txt"
+        client = InOut.check_mongodb_connection()
 
-        # Clear Text File
-        # InOut.clearTextFile(targetDirectory + "Output/results_bad.txt")
+        if client:
+            InOut.saveResultsMongo(client, "Output_Bad", data)
 
-        # Save
-        #InOut.saveResults(fileFullPath, data)
-        InOut.saveResultsMongo("Output_Bad", data)
+        else:
+            fileFullPath = targetDirectory + "data/Output/" + "results_bad.txt"
+
+            # Clear Text File
+            InOut.clearTextFile(fileFullPath)
+
+            # Save
+            InOut.saveResults(fileFullPath, data)
+
+        data.clear()
     
     # Step 3: Convert to Json
     JsonConverted(targetDirectory + "data/")
     
     # Step 4: Report find Dataset
-    elements = ["P84", "Channel"]
+    elements = InOut.elementToFind(targetDirectory + "Scripts/elements.txt")
     data = finder(targetDirectory + "data/", elements)
 
     # Step 5: Save Results
     if len(data.items()) > 0:
-        # fileFullPath = targetDirectory + "Output/" + "results.txt"
+        client = InOut.check_mongodb_connection()
 
-        # Clear Text File
-        # InOut.clearTextFile(targetDirectory + "Output/results.txt")
+        if client:
+            InOut.saveResultsMongo(client, "Output_Good", data)
+        
+        else:
+            fileFullPath = targetDirectory + "data/Output/" + "results_good.txt"
 
-        # Save
-        # InOut.saveResults(fileFullPath, data)
-        InOut.saveResultsMongo("Output_Good", data)
+            # Clear Text File
+            InOut.clearTextFile(fileFullPath)
+
+            # Save
+            InOut.saveResults(fileFullPath, data)
+
+        data.clear()
