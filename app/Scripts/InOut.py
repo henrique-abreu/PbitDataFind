@@ -7,15 +7,21 @@ from pymongo.errors import ConnectionFailure
 
 
 def check_mongodb_connection():
-    try:
-        client = MongoClient('mongodb://mongodb:27017/', username='admin', password='admin')
 
-        # Use a command to check the server status
-        server_info = client.admin.command('serverStatus')
+    # Check if mongodb is running
+    for serverName in ("localhost", "mongodb"):
+        try:
+            client = MongoClient(f'mongodb://{serverName}:27017/', username='admin', password='admin')
 
-        return client
-    except ConnectionFailure:
-        return None
+            # Use a command to check the server status
+            server_info = client.admin.command('serverStatus')
+
+            return client
+        
+        except ConnectionFailure:
+            continue
+    
+    return None
 
 
 def existsFolder(targetDirectory, subfolder):

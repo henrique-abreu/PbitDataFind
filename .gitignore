@@ -1,5 +1,7 @@
 # Delete
-app/data/
+app/data/Extract
+app/data/JsonConverted
+app/data/Output
 Extract/
 JsonConverted/
 Output/
