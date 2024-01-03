@@ -38,7 +38,7 @@ The last step was to be able to run the python code without the need of MongoDB 
 From the root directory of the project:
 
 ```
-pip install -r ./app/Scripts/requirements.txt 
+pip install -r ./app/requirements.txt 
 ```
 And then
  ```
